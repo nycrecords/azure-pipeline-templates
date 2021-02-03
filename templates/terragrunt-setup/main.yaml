@@ -1,0 +1,62 @@
+---
+parameters:
+- name: 'ssh_private_key_pipelines'
+  type: string
+  default: 'ssh_automation'
+  displayName: 'Private Key for SSH'
+- name: 'terraform_version'
+  type: string
+  default: '0.14.3'
+  displayName: 'Terraform Version'
+- name: 'aws_service_connection'
+  type: string
+  displayName: 'AWS Service Connection'
+
+
+steps:
+- checkout: self
+
+# Download SSH Key for Access to VMs
+- task: DownloadSecureFile@1
+  name: ssh_key
+  displayName: 'Download SSH Key'
+  inputs:
+    secureFile: '$(ssh_private_key_pipelines)'
+
+- script: |
+    echo Installing $(ssh_key.secureFilePath) to the ~/.ssh directory...
+    mkdir -p /root/.ssh
+    chown root:root $(ssh_key.secureFilePath)
+    chmod 400 $(ssh_key.secureFilePath)
+    ln -s $(ssh_key.secureFilePath) /root/.ssh/id_rsa
+    echo Adding known_hosts for azure devops repos.
+    echo $(known_host) > /root/.ssh/known_hosts
+  displayName: "Setting up SSH Key"
+
+- task: AWSShellScript@1
+  displayName: 'Get AWS Session Credentials'
+  inputs:
+    awsCredentials: $(aws_service_connection)
+    regionName: 'us-east-1'
+    scriptType: 'inline'
+    inlineScript: |
+      if [ "$(provider)" != "aws" ]; then
+          echo "Not an aws pipeline. ignore this step."
+          exit 0
+      fi
+
+      rm -f /root/.aws/credentials || true
+
+      mkdir -p /root/.aws
+      cat <<- EOF > /root/.aws/credentials
+      [default]
+      aws_access_key_id=${AWS_ACCESS_KEY_ID}
+      aws_secret_access_key=${AWS_SECRET_ACCESS_KEY}
+      aws_session_token=${AWS_SESSION_TOKEN}
+      EOF
+
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+  displayName: 'Install Terraform'
+  inputs:
+    terraformVersion: $(terraform_version)
+
