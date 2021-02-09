@@ -33,7 +33,7 @@ stages:
           - template: terragrunt_setup.yaml
 
           - task: AzureCLI@2
-            displayName: 'Terragrunt Apply'
+            displayName: 'Terragrunt Destroy (Dry Run)'
             inputs:
               scriptType: bash
               scriptLocation: inlineScript

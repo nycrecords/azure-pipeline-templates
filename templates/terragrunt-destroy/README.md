@@ -6,7 +6,7 @@ Runs a terraform configuration using terragrunt destroy.
 Pre-Requisites
 --------------
 
-YOu should run the [terragrunt-setup](../terragrunt-setup/README.md) template before running this configuration to make sure terragrunt and terraform are installed and configured properly.
+You should run the [terragrunt-setup](../terragrunt-setup/README.md) template before running this configuration to make sure terragrunt and terraform are installed and configured properly.
 
 Usage
 -----
