@@ -1,0 +1,53 @@
+---
+parameters:
+- name: pool
+  type: string
+  displayName: 'AKS Pool Name'
+- name: azure_service_connection
+  type: string
+  displayName: 'Azure Service Connection Name'
+- name: arm_environment
+  type: string
+  displayname: 'ARM Environment'
+- name: arm_subscription_id
+  type: string
+  displayname: 'ARM Subscription ID'
+- name: workdir
+  type: string
+  default: '.'
+  displayName: 'Working Directory'
+- name: tf_apply_command_options
+  type: string
+  default: ''
+  displayName: 'Terraform Apply Command Options'
+
+stages:
+- stage: Terragrunt_Apply
+  jobs:
+  - deployment: Terragrunt_Apply
+    displayName: Terragrunt Apply
+    pool: $(pool)
+    environment: terragrunt_apply
+    continueOnError: 'false'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: terragrunt_setup.yaml
+
+          - task: AzureCLI@2
+            displayName: 'Terragrunt Apply'
+            inputs:
+              scriptType: bash
+              scriptLocation: inlineScript
+              azureSubscription: $(azure_service_connection)
+              addSpnToEnvironment: true
+              inlineScript: |
+                export ARM_ENVIRONMENT=$(arm_environment)
+                export ARM_CLIENT_ID=$servicePrincipalId
+                export ARM_CLIENT_SECRET=$servicePrincipalKey
+                export ARM_SUBSCRIPTION_ID=$(arm_subscription_id)
+                export ARM_TENANT_ID=$tenantId
+                directory=$(workdir)
+                cd ${directory}
+                terragrunt apply $(tf_apply_command_options)
