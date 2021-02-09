@@ -30,7 +30,6 @@ jobs:
     tf_apply_command_options: 
 ```
 
-
 Parameters
 ----------
 
