@@ -16,10 +16,6 @@ parameters:
   type: string
   default: '.'
   displayName: 'Working Directory'
-- name: tf_validate_command_options
-  type: string
-  default: ''
-  displayName: 'Terraform Validate Command Options'
 - name: tf_fmt_command_options
   type: string
   default: ''
@@ -55,20 +51,3 @@ stages:
                 directory=$(workdir)
                 cd ${directory}
                 terraform fmt $(tf_fmt_command_options)
-
-          - task: AzureCLI@2
-            displayName: 'Terragrunt Validate'
-            inputs:
-              scriptType: bash
-              scriptLocation: inlineScript
-              azureSubscription: $(azure_service_connection)
-              addSpnToEnvironment: true
-              inlineScript: |
-                export ARM_ENVIRONMENT=$(arm_environment)
-                export ARM_CLIENT_ID=$servicePrincipalId
-                export ARM_CLIENT_SECRET=$servicePrincipalKey
-                export ARM_SUBSCRIPTION_ID=$(arm_subscription_id)
-                export ARM_TENANT_ID=$tenantId
-                directory=$(workdir)
-                cd ${directory}
-                terragrunt validate $(tf_validate_command_options)
