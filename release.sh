@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Only on master
-if [ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]; then
+if [ "$(git rev-parse --abbrev-ref HEAD)" != "main" ]; then
   echo "Failure: You can version only when on master branch"
   exit 1
 fi
