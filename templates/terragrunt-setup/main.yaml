@@ -1,4 +1,10 @@
 ---
+variables:
+  - name: terraform_version
+    value: 0
+  - name: terragrunt_version
+    value: 0
+
 parameters:
 - name: 'ssh_private_key_pipelines'
   type: string
@@ -51,8 +57,27 @@ steps:
       aws_session_token=${AWS_SESSION_TOKEN}
       EOF
 
+- bash: |
+    TERRAFORM_VERSION=$(cat ./.tool-versions | grep "terraform" | head -1 | awk -F' ' '{ print $2 }')
+    echo "##vso[task.setvariable variable=terraform_version;]$TERRAFORM_VERSION"
+    TERRAGRUNT_VERSION=$(cat ./.tool-versions | grep "terragrunt" | head -1 | awk -F' ' '{ print $2 }')
+    echo "##vso[task.setvariable variable=terragrunt_version;]$TERRAGRUNT_VERSION"
+  displayName: 'Parse Terraform and Terragrunt Versions'
+
 - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
   displayName: 'Install Terraform'
   inputs:
     terraformVersion: $(terraform_version)
 
+- task: Bash@3
+  displayName: Install terrgrunt
+  inputs:
+    targetType: 'inline'
+    failOnStderr: false
+    script: |
+      TERRAGRUNT_VERSION=$(terragrunt_version/)
+      wget https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64
+      chmod +x terragrunt_linux_amd64
+      sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
+      terragrunt -v
+  
