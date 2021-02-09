@@ -17,8 +17,7 @@ resources:
     - repository: templates
       type: github
       name: nycrecords/azure-pipeline-templates
-      ref: refs/tags/v5
-
+      ref: refs/tags/v1
 jobs:
 - template: templates/terragrunt-format/main.yaml@templates
   parameters:

@@ -4,10 +4,6 @@ parameters:
   type: string
   default: 'ssh_automation'
   displayName: 'Private Key for SSH'
-- name: 'terraform_version'
-  type: string
-  default: '0.14.3'
-  displayName: 'Terraform Version'
 - name: 'aws_service_connection'
   type: string
   displayName: 'AWS Service Connection'
