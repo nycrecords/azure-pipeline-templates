@@ -9,7 +9,7 @@ parameters:
 - name: tf_arm_environment
   type: string
   displayName: 'ARM Environment'
-- name: tf_arm_subscriptoin_id
+- name: tf_arm_subscription_id
   type: string
   displayName: 'ARM Subscription ID'
 - name: workdir
@@ -43,7 +43,7 @@ jobs:
               export ARM_ENVIRONMENT=$(tf_arm_environment)
               export ARM_CLIENT_ID=$servicePrincipalId
               export ARM_CLIENT_SECRET=$servicePrincipalKey
-              export ARM_SUBSCRIPTION_ID=$(tf_arm_subscriptoin_id)
+              export ARM_SUBSCRIPTION_ID=$(tf_arm_subscription_id)
               export ARM_TENANT_ID=$tenantId
               directory=$(workdir)
               cd ${directory}
