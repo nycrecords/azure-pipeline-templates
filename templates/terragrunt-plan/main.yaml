@@ -30,7 +30,7 @@ jobs:
     runOnce:
       deploy:
         steps:
-        - template: terragrunt_setup.yaml
+        - template: main.yaml
 
         - task: AzureCLI@2
           displayName: 'Terragrunt Plan'
