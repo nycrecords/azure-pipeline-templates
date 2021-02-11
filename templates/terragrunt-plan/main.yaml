@@ -47,4 +47,4 @@ jobs:
               export ARM_TENANT_ID=$tenantId
               ls -lGah
               pwd
-              terragrunt plan $(tf_plan_command_options)
+              terragrunt plan-all $(tf_plan_command_options)
