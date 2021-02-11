@@ -8,8 +8,6 @@ parameters:
   type: string
   displayName: 'AWS Service Connection'
 
-
-steps:
 - checkout: self
 
 # Download SSH Key for Access to VMs
