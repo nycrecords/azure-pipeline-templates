@@ -3,7 +3,7 @@ parameters:
 - name: pool
   type: string
   displayName: 'AKS Pool Name'
-- name: azure_service_connection
+- name: tf_azure_service_connection
   type: string
   displayName: 'Azure Service Connection Name'
 - name: arm_environment
@@ -35,7 +35,7 @@ jobs:
           inputs:
             scriptType: bash
             scriptLocation: inlineScript
-            azureSubscription: $(azure_service_connection)
+            azureSubscription: $(tf_azure_service_connection)
             addSpnToEnvironment: true
             inlineScript: |
               export ARM_ENVIRONMENT=$(arm_environment)

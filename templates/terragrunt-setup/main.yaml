@@ -4,12 +4,12 @@ parameters:
   type: string
   default: 'ssh_automation'
   displayName: 'Private Key for SSH'
-- name: 'aws_service_connection'
+- name: 'tf_aws_service_connection'
   type: string
   displayName: 'AWS Service Connection'
 
 jobs:
-- job: setupPreRequisites
+- job: Setup_PreRequisites
   steps:
   - checkout: self
 
@@ -33,7 +33,7 @@ jobs:
   - task: AWSShellScript@1
     displayName: 'Get AWS Session Credentials'
     inputs:
-      awsCredentials: $(aws_service_connection)
+      awsCredentials: $(tf_aws_service_connection)
       regionName: 'us-east-1'
       scriptType: 'inline'
       inlineScript: |
