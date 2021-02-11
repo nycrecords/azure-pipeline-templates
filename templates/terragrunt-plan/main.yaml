@@ -30,8 +30,6 @@ jobs:
     runOnce:
       deploy:
         steps:
-        - template: main.yaml
-
         - task: AzureCLI@2
           displayName: 'Terragrunt Plan'
           inputs:
