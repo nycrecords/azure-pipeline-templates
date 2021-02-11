@@ -65,7 +65,7 @@ jobs:
       terraformVersion: $(terraform_version)
 
   - task: Bash@3
-    displayName: Install terrgrunt
+    displayName: Install terragrunt
     inputs:
       targetType: 'inline'
       failOnStderr: false

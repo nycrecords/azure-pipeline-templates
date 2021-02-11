@@ -6,10 +6,10 @@ parameters:
 - name: tf_azure_service_connection
   type: string
   displayName: 'Azure Service Connection Name'
-- name: arm_environment
+- name: tf_arm_environment
   type: string
   displayName: 'ARM Environment'
-- name: arm_subscription_id
+- name: tf_arm_subscriptoin_id
   type: string
   displayName: 'ARM Subscription ID'
 - name: workdir
@@ -31,7 +31,7 @@ jobs:
       deploy:
         steps:
         - checkout: self
-        
+
         - task: AzureCLI@2
           displayName: 'Terragrunt Plan'
           inputs:
@@ -40,10 +40,10 @@ jobs:
             azureSubscription: $(tf_azure_service_connection)
             addSpnToEnvironment: true
             inlineScript: |
-              export ARM_ENVIRONMENT=$(arm_environment)
+              export ARM_ENVIRONMENT=$(tf_arm_environment)
               export ARM_CLIENT_ID=$servicePrincipalId
               export ARM_CLIENT_SECRET=$servicePrincipalKey
-              export ARM_SUBSCRIPTION_ID=$(arm_subscription_id)
+              export ARM_SUBSCRIPTION_ID=$(tf_arm_subscriptoin_id)
               export ARM_TENANT_ID=$tenantId
               directory=$(workdir)
               cd ${directory}
