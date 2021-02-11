@@ -22,7 +22,8 @@ parameters:
   displayName: 'Terraform Plan Command Options'
 
 jobs:
-- deployment: Terragrunt_Plan
+- job:
+  deployment: Terragrunt_Plan
   pool: $(pool)
   environment: terragrunt_plan
   continueOnError: 'false'
