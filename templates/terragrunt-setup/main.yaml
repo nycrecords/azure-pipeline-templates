@@ -1,10 +1,4 @@
 ---
-variables:
-  - name: terraform_version
-    value: 0
-  - name: terragrunt_version
-    value: 0
-
 parameters:
 - name: 'ssh_private_key_pipelines'
   type: string

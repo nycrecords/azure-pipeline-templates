@@ -2,7 +2,8 @@
 
 Common Azure Pipeline tasks for DevOps automation.
 
-## Usage
+Usage
+-----
 
 The templates are meant to be included into a project pipeline. 
 
@@ -11,11 +12,19 @@ The templates are meant to be included into a project pipeline.
 - Always specify the reference tag when including a pipeline in your template to avoid breaking the workflow when a new template version is released.
 - Pipeline templates should not have default values (whenever possible). Assume the upstream pipeline will be providing all the values.
 
-## Current  Templates
+Current  Templates
+------------------
 
-N/A
+- [terragrunt-apply](templates/terragrunt-apply/README.md)
+- [terragrunt-destroy](templates/terragrunt-destroy/README.md)
+- [terragrunt-destroy-dry-run](templates/terragrunt-destroy-dry-run/README.md)
+- [terragrunt-format](templates/terragrunt-format/README.md)
+- [terragrunt-plan](templates/terragrunt-plan/README.md)
+- [terragrunt-setup](templates/terragrunt-setup/README.md)
+- [terragrunt-validate](templates/terragrunt-validate/README.md)
 
-## Contributing
+Contributing
+------------
 
 ### Create a new template
 
