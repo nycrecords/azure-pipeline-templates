@@ -45,6 +45,7 @@ jobs:
               export ARM_CLIENT_SECRET=$servicePrincipalKey
               export ARM_SUBSCRIPTION_ID=$(tf_arm_subscription_id)
               export ARM_TENANT_ID=$tenantId
+              ls -lGah
               directory=$(workdir)
               cd ${directory}
               terragrunt plan $(tf_plan_command_options)
