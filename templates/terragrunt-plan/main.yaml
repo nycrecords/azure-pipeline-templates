@@ -8,10 +8,10 @@ parameters:
   displayName: 'Azure Service Connection Name'
 - name: arm_environment
   type: string
-  displayname: 'ARM Environment'
+  displayName: 'ARM Environment'
 - name: arm_subscription_id
   type: string
-  displayname: 'ARM Subscription ID'
+  displayName: 'ARM Subscription ID'
 - name: workdir
   type: string
   default: '.'
@@ -25,7 +25,6 @@ stages:
 - stage: Terragrunt_Plan
   jobs:
   - deployment: Terragrunt_Plan
-    displayName: Terragrunt_Plan
     pool: $(pool)
     environment: terragrunt_plan
     continueOnError: 'false'
