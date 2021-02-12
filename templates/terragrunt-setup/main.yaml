@@ -58,10 +58,17 @@ stages:
               echo "##vso[task.setvariable variable=terragrunt_version;]$TERRAGRUNT_VERSION"
             displayName: 'Parse Terraform and Terragrunt Versions'
 
-          - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
-            displayName: 'Install Terraform'
+
+          - task: Bash@3
+            displayName: Install terraform
             inputs:
-              terraformVersion: $(terraform_version)
+              targetType: 'inline'
+              failOnStderr: false
+              script: |
+                TERRAFORM_VERSION=$(terraform_version)
+                asdf install terraform $terraform_version
+                terraform -v
+  
 
           - task: Bash@3
             displayName: Install terragrunt
