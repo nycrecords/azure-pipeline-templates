@@ -1,13 +1,4 @@
 ---
-parameters:
-- name: 'ssh_private_key_pipelines'
-  type: string
-  default: 'ssh_automation'
-  displayName: 'Private Key for SSH'
-- name: 'tf_aws_service_connection'
-  type: string
-  displayName: 'AWS Service Connection'
-
 stages:
 - stage: SetupTerragrunt
   jobs:
