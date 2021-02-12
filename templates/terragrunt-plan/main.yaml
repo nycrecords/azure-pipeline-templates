@@ -45,7 +45,4 @@ jobs:
               export ARM_CLIENT_SECRET=$servicePrincipalKey
               export ARM_SUBSCRIPTION_ID=$(tf_arm_subscription_id)
               export ARM_TENANT_ID=$tenantId
-              mkdir -p ~/.ssh
-              chmod 700 ~/.ssh
-              ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
               terragrunt plan-all $(tf_plan_command_options)
