@@ -49,4 +49,5 @@ stages:
                 export ARM_TENANT_ID=$tenantId
                 which terraform
                 which terragrunt
+                terraform --version
                 terragrunt plan-all $(tf_plan_command_options)
