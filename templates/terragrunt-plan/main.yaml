@@ -47,4 +47,6 @@ stages:
                 export ARM_CLIENT_SECRET=$servicePrincipalKey
                 export ARM_SUBSCRIPTION_ID=$(tf_arm_subscription_id)
                 export ARM_TENANT_ID=$tenantId
+                which terraform
+                which terragrunt
                 terragrunt plan-all $(tf_plan_command_options)
