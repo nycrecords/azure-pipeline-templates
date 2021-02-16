@@ -27,7 +27,10 @@ stages:
               ln -s $(ssh_key.secureFilePath) /root/.ssh/id_rsa
               echo Adding known_hosts for azure devops repos.
               echo $(known_host) > /root/.ssh/known_hosts
+              echo $(sshPublicKey) > /root/.ssh/id_rsa.pub
             displayName: "Setting up SSH Key"
+            inputs:
+              sshPublicKey: '$(ssh_public_key_pipelines)'
 
           - task: AWSShellScript@1
             displayName: 'Get AWS Session Credentials'
