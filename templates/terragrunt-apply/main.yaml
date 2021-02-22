@@ -22,7 +22,7 @@ parameters:
   displayName: 'Terraform Apply Command Options'
 
 stages:
-- stage: Terragrunt_Apply
+- stage: TerragruntApply
   jobs:
   - deployment: Terragrunt_Apply
     displayName: Terragrunt Apply
@@ -48,6 +48,4 @@ stages:
                 export ARM_CLIENT_SECRET=$servicePrincipalKey
                 export ARM_SUBSCRIPTION_ID=$(arm_subscription_id)
                 export ARM_TENANT_ID=$tenantId
-                directory=$(workdir)
-                cd ${directory}
                 terragrunt apply $(tf_apply_command_options)
