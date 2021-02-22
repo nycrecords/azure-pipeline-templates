@@ -21,11 +21,11 @@ parameters:
   default: ''
   displayName: 'Terraform Apply Command Options'
 
+
 stages:
 - stage: TerragruntApply
   jobs:
   - deployment: Terragrunt_Apply
-    displayName: Terragrunt Apply
     pool: $(pool)
     environment: terragrunt_apply
     continueOnError: 'false'
@@ -33,19 +33,22 @@ stages:
       runOnce:
         deploy:
           steps:
-          - template: main.yaml
+          - checkout: self
 
           - task: AzureCLI@2
             displayName: 'Terragrunt Apply'
             inputs:
               scriptType: bash
               scriptLocation: inlineScript
-              azureSubscription: $(azure_service_connection)
+              azureSubscription: $(tf_azure_service_connection)
               addSpnToEnvironment: true
               inlineScript: |
-                export ARM_ENVIRONMENT=$(arm_environment)
+                export ARM_ENVIRONMENT=$(tf_arm_environment)
                 export ARM_CLIENT_ID=$servicePrincipalId
                 export ARM_CLIENT_SECRET=$servicePrincipalKey
-                export ARM_SUBSCRIPTION_ID=$(arm_subscription_id)
+                export ARM_SUBSCRIPTION_ID=$(tf_arm_subscription_id)
                 export ARM_TENANT_ID=$tenantId
+                terraform --version
+                directory=$(workdir)
+                cd $directory
                 terragrunt apply $(tf_apply_command_options)
