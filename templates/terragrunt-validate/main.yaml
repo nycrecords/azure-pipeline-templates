@@ -22,10 +22,9 @@ parameters:
   displayName: 'Terraform Validate Command Options'
 
 stages:
-- stage: Terragrunt_Preflight_Check
+- stage: TerragruntPreFlightCheck
   jobs:
-  - deployment: Terragrunt_Preflight_Check
-    displayName: Terragrunt_Preflight_Check
+  - deployment: Terragrunt_PreFlight_Check
     pool: $(pool)
     environment: terragrunt_preflight
     continueOnError: 'false'
@@ -33,10 +32,10 @@ stages:
       runOnce:
         deploy:
           steps:
-          - template: main.yaml
+          - checkout: self
 
           - task: AzureCLI@2
-            displayName: 'Terragrunt Validate'
+            displayName: 'Terragrunt PreFlight'
             inputs:
               scriptType: bash
               scriptLocation: inlineScript
@@ -46,8 +45,9 @@ stages:
                 export ARM_ENVIRONMENT=$(tf_arm_environment)
                 export ARM_CLIENT_ID=$servicePrincipalId
                 export ARM_CLIENT_SECRET=$servicePrincipalKey
-                export ARM_SUBSCRIPTION_ID=$(atf_rm_subscription_id)
+                export ARM_SUBSCRIPTION_ID=$(tf_arm_subscription_id)
                 export ARM_TENANT_ID=$tenantId
+                terraform --version
                 directory=$(workdir)
-                cd ${directory}
-                terragrunt validate $(tf_validate_command_options)
+                cd $directory
+                terragrunt validate $(tf_Validate_command_options)
