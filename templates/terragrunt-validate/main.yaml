@@ -3,13 +3,13 @@ parameters:
 - name: pool
   type: string
   displayName: 'AKS Pool Name'
-- name: azure_service_connection
+- name: tf_azure_service_connection
   type: string
   displayName: 'Azure Service Connection Name'
-- name: arm_environment
+- name: tf_arm_environment
   type: string
   displayName: 'ARM Environment'
-- name: arm_subscription_id
+- name: tf_arm_subscription_id
   type: string
   displayName: 'ARM Subscription ID'
 - name: workdir
@@ -40,13 +40,13 @@ stages:
             inputs:
               scriptType: bash
               scriptLocation: inlineScript
-              azureSubscription: $(azure_service_connection)
+              azureSubscription: $(tf_azure_service_connection)
               addSpnToEnvironment: true
               inlineScript: |
-                export ARM_ENVIRONMENT=$(arm_environment)
+                export ARM_ENVIRONMENT=$(tf_arm_environment)
                 export ARM_CLIENT_ID=$servicePrincipalId
                 export ARM_CLIENT_SECRET=$servicePrincipalKey
-                export ARM_SUBSCRIPTION_ID=$(arm_subscription_id)
+                export ARM_SUBSCRIPTION_ID=$(atf_rm_subscription_id)
                 export ARM_TENANT_ID=$tenantId
                 directory=$(workdir)
                 cd ${directory}
