@@ -3,15 +3,15 @@ parameters:
 - name: pool
   type: string
   displayName: 'AKS Pool Name'
-- name: azure_service_connection
+- name: tf_azure_service_connection
   type: string
   displayName: 'Azure Service Connection Name'
-- name: arm_environment
+- name: tf_arm_environment
   type: string
-  displayname: 'ARM Environment'
-- name: arm_subscription_id
+  displayName: 'ARM Environment'
+- name: tf_arm_subscription_id
   type: string
-  displayname: 'ARM Subscription ID'
+  displayName: 'ARM Subscription ID'
 - name: workdir
   type: string
   default: '.'
