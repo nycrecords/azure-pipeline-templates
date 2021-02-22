@@ -22,11 +22,11 @@ parameters:
   displayName: 'Terraform Validate Command Options'
 
 stages:
-- stage: TerragruntPreFlightCheck
+- stage: TerragruntValidate
   jobs:
-  - deployment: Terragrunt_PreFlight_Check
+  - deployment: Terragrunt_Validate
     pool: $(pool)
-    environment: terragrunt_preflight
+    environment: terragrunt_validate
     continueOnError: 'false'
     strategy:
       runOnce:
@@ -35,7 +35,7 @@ stages:
           - checkout: self
 
           - task: AzureCLI@2
-            displayName: 'Terragrunt PreFlight'
+            displayName: 'Terragrunt Validate'
             inputs:
               scriptType: bash
               scriptLocation: inlineScript
