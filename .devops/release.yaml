@@ -7,19 +7,21 @@
 # GITHUB_CONNECTION - name of the Github service connection used to create a new release; be sure that the related user has appopriate right
 # 
 
-# Activated on every push on master, one at a time, only when files in /templates folder are modified
+# Activated on every push on main, one at a time, only when files in /templates folder are modified
+variables:
+ - group:  DORIS Automatic Releases
+
 trigger:
   batch: true
   branches:
     include:
-      - master
+      - main
   paths:
     include:
       - template/*
 pr: none
 
-pool:
-  vmImage: 'ubuntu-latest'
+pool: $(pool)
 
 stages:
 
@@ -36,7 +38,7 @@ stages:
 
           # setup git author
           - script: |
-              git config --global user.email "$(GIT_EMAIL)" && git config --global user.name "$(GIT_USERNAME)"
+              git config --global user.email "$(git_email)" && git config --global user.name "$(git_username)"
             displayName: 'Git setup' 
             
           # bump version and push
@@ -67,7 +69,7 @@ stages:
           # create new releae
           - task: GitHubRelease@0
             inputs:
-              gitHubConnection: $(GITHUB_CONNECTION)
+              gitHubConnection: $(github_)
               repositoryName: $(Build.Repository.Name)
               action: create
               target: $(sha)

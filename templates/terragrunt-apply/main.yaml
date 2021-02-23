@@ -24,6 +24,7 @@ parameters:
 
 stages:
 - stage: TerragruntApply
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   jobs:
   - deployment: Terragrunt_Apply
     pool: $(pool)
