@@ -69,7 +69,7 @@ stages:
           # create new releae
           - task: GitHubRelease@0
             inputs:
-              gitHubConnection: $(github_)
+              gitHubConnection: $(github_service_connection)
               repositoryName: $(Build.Repository.Name)
               action: create
               target: $(sha)
