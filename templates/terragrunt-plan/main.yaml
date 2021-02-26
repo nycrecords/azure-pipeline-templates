@@ -50,9 +50,7 @@ stages:
                 terraform --version
                 directory=$(workdir)
                 cd $directory
-                terragrunt plan-all $(tf_plan_command_options) 2&>1 $HOME/terragrunt.plan
-                ls -lGah $HOME
-                plan_output=$(cat $HOME/terragrunt.plan)
+                terragrunt plan-all $(tf_plan_command_options)
                 echo "##vso[task.setvariable variable=terragruntPlanOutput;isOutput=true]$plan_output"
 
           - task: GithubComment@0
