@@ -16,13 +16,11 @@ parameters:
   type: string
   default: '.'
   displayName: 'Working Directory'
-  
+
 stages:
-- stage: Terraform_Destroy_DryRun
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+- stage: TerragruntDestroyDryRun
   jobs:
-  - deployment: Terraform_Destroy_DryRun
-    displayName: 'Terraform Destroy (Dry Run)'
+  - deployment: Terragrunt_Destroy_Dry_Run
     pool: $(pool)
     environment: terragrunt_destroy_dry_run
     continueOnError: 'false'
@@ -30,21 +28,22 @@ stages:
       runOnce:
         deploy:
           steps:
-          - template: main.yaml
+          - checkout: self
 
           - task: AzureCLI@2
-            displayName: 'Terragrunt Destroy (Dry Run)'
+            displayName: 'Terragrunt Destroy Dry Run'
             inputs:
               scriptType: bash
               scriptLocation: inlineScript
-              azureSubscription: $(azure_service_connection)
+              azureSubscription: $(tf_azure_service_connection)
               addSpnToEnvironment: true
               inlineScript: |
-                export ARM_ENVIRONMENT=$(arm_environment)
+                export ARM_ENVIRONMENT=$(tf_arm_environment)
                 export ARM_CLIENT_ID=$servicePrincipalId
                 export ARM_CLIENT_SECRET=$servicePrincipalKey
-                export ARM_SUBSCRIPTION_ID=$(arm_subscription_id)
+                export ARM_SUBSCRIPTION_ID=$(tf_arm_subscription_id)
                 export ARM_TENANT_ID=$tenantId
+                terraform --version
                 directory=$(workdir)
-                cd ${directory}
-                terragrunt plan --destroy
+                cd $directory
+                terragrunt plan-all $(tf_plan_command_options)
