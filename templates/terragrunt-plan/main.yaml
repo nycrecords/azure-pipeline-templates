@@ -20,6 +20,9 @@ parameters:
   type: string
   default: ''
   displayName: 'Terraform Plan Command Options'
+- name: github_service_connection
+  type: string
+  displayName: 'Github Service Connection'
 
 stages:
 - stage: TerragruntPlan
@@ -56,7 +59,7 @@ stages:
           - task: GithubComment@0
             displayName: 
             inputs:
-              gitHubConnection: 'nycrecords'
+              gitHubConnection: $(github_service_connection)
               repositoryName: '$(Build.Repository.Name)'
               id: $(System.PullRequest.PullRequestNumber)
               comment: $(terragruntPlanOutput)
