@@ -20,9 +20,6 @@ parameters:
   type: string
   default: ''
   displayName: 'Terraform Plan Command Options'
-- name: github_service_connection
-  type: string
-  displayName: 'Github Service Connection'
 
 stages:
 - stage: TerragruntPlan
@@ -53,5 +50,4 @@ stages:
                 terraform --version
                 directory=$(workdir)
                 cd $directory
-                ip a
                 terragrunt plan-all $(tf_plan_command_options)
