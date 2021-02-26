@@ -54,12 +54,3 @@ stages:
                 directory=$(workdir)
                 cd $directory
                 terragrunt plan-all $(tf_plan_command_options)
-                echo "##vso[task.setvariable variable=terragruntPlanOutput;isOutput=true]$plan_output"
-
-          - task: GithubComment@0
-            displayName: 
-            inputs:
-              gitHubConnection: $(github_service_connection)
-              repositoryName: '$(Build.Repository.Name)'
-              id: $(System.PullRequest.PullRequestNumber)
-              comment: $(terragruntPlanOutput)
