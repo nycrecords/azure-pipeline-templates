@@ -53,4 +53,5 @@ stages:
                 terraform --version
                 directory=$(workdir)
                 cd $directory
+                ip a
                 terragrunt plan-all $(tf_plan_command_options)
